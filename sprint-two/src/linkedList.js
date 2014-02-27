@@ -41,20 +41,32 @@ LinkedList.prototype = {
       return false;
     }
 
-    //return node.value === target || (node.next !== null ?) this.contains(target, node.next) : nu
+    return !! ( node.value === target || node.next && this.contains(target, node.next) );
 
-    var doesContain = false;
-    if(node.value === target){
-      doesContain = true;
-    }
+    // var doesContain = false;
+    // if(node.value === target){
+    //   doesContain = true;
+    // } else if(node.next !== null){
+    //   if(this.contains(target, node.next)){
+    //     doesContain = true;
+    //   }
+    // }
 
-    if(node.next !== null){
-      if(this.contains(target, node.next)){
-        doesContain = true;
-      }
-    }
+    // return doesContain;
 
-    return doesContain;
+
+    // 
+    // if(node.value === target){
+    //   return true;
+    // }
+
+    // if(node.next !== null){
+    //   if(this.contains(target, node.next)){
+    //     return true;
+    //   }
+    // }
+
+    // return false;
   }
 }
 
