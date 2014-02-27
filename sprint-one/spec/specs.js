@@ -19,13 +19,20 @@ define([
   describe("stack", function() {
 
     var stack;
+    var stackArr = [];
     var instantiator = variant === 'pseudoclassical' ? Stack : makeStack;
     var prototypeOfInstances = variant === 'prototypal' && stackMethods;
 
     beforeEach(function(){
       if(variant === 'pseudoclassical'){
+        for(var i = 0; i < 10000; i++){
+          stackArr[i] = new instantiator();
+        }
         stack = new instantiator();
       } else {
+        for(var i = 0; i < 10000; i++){
+          stackArr[i] = instantiator();
+        }
         stack = instantiator();
       }
     });
@@ -35,13 +42,38 @@ define([
       verifyClass(instantiator).followsPattern(variant, {}, prototypeOfInstances);
 
       it('reports a size of zero for a new stack', function() {
+
         expect(stack.size()).to.equal(0);
+
+      });
+
+      it('reports each of 10000 stacks to be of size 0 on instansiation', function() {
+        var sizes = _.map(stackArr, function(st){
+          return st.size();
+        });
+        var allZero = _.every(sizes, function(val){
+          return val === 0;
+        });
+        //expect(stack.size()).to.equal(0);
+        expect(allZero).to.equal(true);
       });
 
       it('reports a size of 2 after adding two items', function() {
         stack.push('a');
         stack.push('b');
         expect(stack.size()).to.equal(2);
+      });
+
+      it('add two elements each to 10000 stacks and checks their sizes to be 2 each', function() {
+        var sizes = _.map(stackArr, function(st){
+          st.push('a');
+          st.push('b');
+          return st.size();
+        });
+        var allZero = _.every(sizes, function(val){
+          return val === 2;
+        });
+        expect(allZero).to.equal(true);
       });
 
       it('does not error when removing from an empty stack', function() {
@@ -91,13 +123,20 @@ define([
 
   describe("queue", function() {
     var queue;
+    var queueArr = [];
     var instantiator = variant === 'pseudoclassical' ? Queue : makeQueue;
     var prototypeOfInstances = variant === 'prototypal' && queueMethods;
 
     beforeEach(function(){
       if(variant === 'pseudoclassical'){
+        for(var i = 0; i < 10000; i++){
+          queueArr[i] = new instantiator();
+        }
         queue = new instantiator();
       } else {
+        for(var i = 0; i < 10000; i++){
+          queueArr[i] = instantiator();
+        }
         queue = instantiator();
       }
     });

@@ -1,7 +1,7 @@
 var Queue = function Queue() {
 
   // if(!this instanceof Queue){
-  //   retu rn new Queue();  // There's a string search for return so can't include this test
+  //   ren new Queue();  // There's a string search for send so can't include this test
   // }
 
   this.storage = {};
