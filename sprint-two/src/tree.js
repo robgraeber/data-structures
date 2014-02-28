@@ -27,5 +27,6 @@ Tree.prototype.contains = function(target, node){
   //        _.some(node.children, function(item){
   //           return item.contains(target);
   //        });
+//
 };
 
