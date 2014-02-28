@@ -12,20 +12,21 @@
 //   limitedArray.get(3); // returns 'hi'
 
 var makeLimitedArray = function(limit){
-  var storage = [];
+  
 
   var limitedArray = {};
+  limitedArray.storage = [];
   limitedArray.get = function(index){
     checkLimit(index);
-    return storage[index];
+    return this.storage[index];
   };
   limitedArray.set = function(index, value){
     checkLimit(index);
-    storage[index] = value;
+    this.storage[index] = value;
   };
   limitedArray.each = function(callback){
-    for(var i = 0; i < storage.length; i++){
-      callback(storage[i], i, storage);
+    for(var i = 0; i < this.storage.length; i++){
+      callback(this.storage[i], i, this.storage);
     }
   };
 
