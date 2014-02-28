@@ -1,16 +1,31 @@
-var makeTree = function(value){
-  var newTree = {};
-  newTree.value = value;
-  newTree.children = undefined;
-  return newTree;
+var Tree = function(value){
+  if(! (this instanceof Tree)){
+    return new Tree(value);
+  }
+
+  this.value = value || null;
+  this.children = [];
 };
 
-
-var treeMethods = {};
-
-treeMethods.addChild = function(value){
+Tree.prototype.addChild = function(value, node){
+  node = node || this;
+  node.children.push(new Tree(value));
 };
 
-treeMethods.contains = function(target){
+Tree.prototype.contains = function(target, node){
+  node = node || this;
+  if(node.value === target){
+    return true;
+  }
+  for(var i = 0 ; i < node.children.length; i++){
+    if(node.children[i].contains(target)){
+      return true;
+    }
+  }
+  return false;
+  // return node.value === target || 
+  //        _.some(node.children, function(item){
+  //           return item.contains(target);
+  //        });
 };
 

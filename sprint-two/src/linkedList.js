@@ -1,8 +1,8 @@
 var LinkedList = function (){
   
-  // if(!this instanceof LinkedList){
-  //   return new LinkedList(value);
-  // }
+  if(!(this instanceof LinkedList)){
+    return new LinkedList(value);
+  }
 
   this.head = null;
   this.tail = null;
@@ -42,20 +42,7 @@ LinkedList.prototype = {
     }
 
     return !! ( node.value === target || node.next && this.contains(target, node.next) );
-
-    // var doesContain = false;
-    // if(node.value === target){
-    //   doesContain = true;
-    // } else if(node.next !== null){
-    //   if(this.contains(target, node.next)){
-    //     doesContain = true;
-    //   }
-    // }
-
-    // return doesContain;
-
-
-    // 
+    // EQUIVALENT METHOD
     // if(node.value === target){
     //   return true;
     // }
