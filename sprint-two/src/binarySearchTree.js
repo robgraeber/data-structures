@@ -11,39 +11,52 @@ var BinarySearchTree = function(value){
   this.value = value;
 };
 BinarySearchTree.prototype.checkImbalance = function(){
+  console.log("checkImbalance running...");
   var left = 0;
   var right = 0;
   var values = [];
-  this.left.depthFirstLog(function(value){
-    left++;
-    values.push(value);
-  });
+  if(this.left){
+    this.left.depthFirstLog(function(value){
+      left++;
+      values.push(value);
+    });
+  }
   values.push(this.value);
-  this.right.depthFirstLog(function(value){
-    right++;
-    values.push(value);
-  });
-
-  if(left < (right/2) || right < (left/2) ){
-
+  if(this.right){
+    this.right.depthFirstLog(function(value){
+      right++;
+      values.push(value);
+    });
+  }
+  console.log("vals before compare:", left, right, values);
+  if( ( (left + right) > 16 ) && (left < (right/2) || right < (left/2)) ){
+    console.log("recreating...");
     var newTree = this.recreate(values);
     this.value = newTree.value;
     this.left = newTree.left;
     this.right = newTree.right;
 
+    console.log('new tree is ', this);
+
   }
 
 }
-
+//Input: Array of values
 BinarySearchTree.prototype.recreate = function(values){
-  var middle = Math.ceil(values.length / 2);
-  var leftValues = values.slice(0, middle-1);
-  var rightValues = values.slice(middle);
+  if(values.length === 0){
+    return null;
+  }
+  var middle = Math.floor(values.length / 2);
+  var leftValues = values.slice(0, middle);
+  var rightValues = values.slice(middle+1);
 
-  var tree = new BinarySearchTree(middle);
-  tree.left = this.recreate(leftValues);
-  tree.right = this.recreate(rightValues);
-
+  var tree = new BinarySearchTree(values[middle]);
+  if(leftValues.length > 0){
+    tree.left = this.recreate(leftValues);
+  }
+  if(rightValues.length > 0){
+    tree.right = this.recreate(rightValues);
+  }
   return tree;
 }
 
@@ -62,7 +75,6 @@ BinarySearchTree.prototype.insert = function(value, level){
       this.right.insert(value);
     }
   }
-
   this.checkImbalance();  
 }
 BinarySearchTree.prototype.contains = function(value){
@@ -86,15 +98,28 @@ BinarySearchTree.prototype.depthFirstLog = function(callback){
     this.right.depthFirstLog(callback);
   }
 }
-BinarySearchTree.prototype.breadthFirstLog = function(callback){
+BinarySearchTree.prototype.breadthFirstLog = function(callback, done){
   var that = this;
   callback(this.value);
+  var callDone = (function(obj, done){
+    var called = 0;
+    return function(){
+      called ++;
+      if(called === 2){
+        done(obj);
+      }
+    };
+  })(this, done);
   setTimeout(function(){
     if(!!that.left){
-      that.left.breadthFirstLog(callback);
+      that.left.breadthFirstLog(callback, callDone);
+    } else {
+      callDone();
     }
     if(!!that.right){
-      that.right.breadthFirstLog(callback);
+      that.right.breadthFirstLog(callback, callDone);
+    } else {
+      callDone();
     }
   }, 0)
 }
