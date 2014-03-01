@@ -38,4 +38,25 @@ describe("binarySearchTree", function() {
     binarySearchTree.depthFirstLog(func);
     assert.notStrictEqual(array, [5,2,3]);
   });
+  it("should execute a callback on every value in a tree using 'breadthFirstLog'", function(){
+    var array = [];
+    var func = function(value){ array.push(value); }
+    binarySearchTree.insert(2);
+    binarySearchTree.insert(3);
+    var results = [];
+    binarySearchTree.breadthFirstLog(function(value){
+      results.push(value);
+    });
+
+    setTimeout(function(){
+      console.log(results);
+    }, 100);
+    // setTimeout(function(){
+    // assert.isTrue(results.indexOf(5) !== -1);
+    // assert.isTrue(results.indexOf(6) !== -1);
+    // assert.isTrue(results.indexOf(7) !== -1);
+    // assert.isTrue(results.indexOf(8) !== -1);
+    // assert.isTrue(results.length === 5);
+    // })
+  });
 });

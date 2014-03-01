@@ -5,7 +5,7 @@ describe("tree", function() {
   var tree;
 
   beforeEach(function() {
-    tree = Tree();
+    tree = Tree(4);
   });
 
   it("should have methods named 'addChild' and 'contains', and a property named 'value'", function() {
@@ -44,4 +44,20 @@ describe("tree", function() {
     assert.isTrue(tree.contains(8));
   });
 
+  it("should correctly traverse all nodes", function(){
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    var results = [];
+    tree.traverse(function(value){
+      results.push(value);
+    });
+    console.log(results);
+    assert.isTrue(results.indexOf(5) !== -1);
+    assert.isTrue(results.indexOf(6) !== -1);
+    assert.isTrue(results.indexOf(7) !== -1);
+    assert.isTrue(results.indexOf(8) !== -1);
+    assert.isTrue(results.length === 5);
+  });
 });

@@ -24,7 +24,12 @@ Tree.prototype.removeChild = function(node){
     }
   }
 };
-
+Tree.prototype.traverse = function (callback){
+  callback(this.value);
+  for(var i = 0 ; i < this.children.length; i++){
+    this.children[i].traverse(callback);
+  }
+};
 Tree.prototype.removeFromParent = function(){
   this.parent.removeChild(this);
   //this.parent = null;

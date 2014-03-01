@@ -10,12 +10,91 @@ var BinarySearchTree = function(value){
   this.right = null;
   this.value = value;
 };
-BinarySearchTree.prototype.insert = function(){
+BinarySearchTree.prototype.checkImbalance = function(){
+  var left = 0;
+  var right = 0;
+  var values = [];
+  this.left.depthFirstLog(function(value){
+    left++;
+    values.push(value);
+  });
+  values.push(this.value);
+  this.right.depthFirstLog(function(value){
+    right++;
+    values.push(value);
+  });
+
+  if(left < (right/2) || right < (left/2) ){
+
+    var newTree = this.recreate(values);
+    this.value = newTree.value;
+    this.left = newTree.left;
+    this.right = newTree.right;
+
+  }
 
 }
-BinarySearchTree.prototype.contains = function(){
-  
+
+BinarySearchTree.prototype.recreate = function(values){
+  var middle = Math.ceil(values.length / 2);
+  var leftValues = values.slice(0, middle-1);
+  var rightValues = values.slice(middle);
+
+  var tree = new BinarySearchTree(middle);
+  tree.left = this.recreate(leftValues);
+  tree.right = this.recreate(rightValues);
+
+  return tree;
 }
-BinarySearchTree.prototype.depthFirstLog = function(){
-  
+
+BinarySearchTree.prototype.insert = function(value, level){
+  if(value <= this.value){
+    if(!this.left){
+      this.left = new BinarySearchTree(value);
+    }else{
+      this.left.insert(value);
+    }
+  }
+  if(value > this.value){
+    if(!this.right){
+      this.right = new BinarySearchTree(value);
+    }else{
+      this.right.insert(value);
+    }
+  }
+
+  this.checkImbalance();  
+}
+BinarySearchTree.prototype.contains = function(value){
+  if(this.value === value){
+    return true;
+  }
+  if(value < this.value && !!this.left){
+    return this.left.contains(value);
+  }
+  if(value > this.value && !!this.right){
+    return this.right.contains(value);
+  }
+  return false;
+}
+BinarySearchTree.prototype.depthFirstLog = function(callback){
+  if(!!this.left){
+    this.left.depthFirstLog(callback);
+  }
+  callback(this.value);
+  if(!!this.right){
+    this.right.depthFirstLog(callback);
+  }
+}
+BinarySearchTree.prototype.breadthFirstLog = function(callback){
+  var that = this;
+  callback(this.value);
+  setTimeout(function(){
+    if(!!that.left){
+      that.left.breadthFirstLog(callback);
+    }
+    if(!!that.right){
+      that.right.breadthFirstLog(callback);
+    }
+  }, 0)
 }
