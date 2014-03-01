@@ -19,6 +19,7 @@ Tree.prototype.removeChild = function(node){
   for(var i = 0; i < this.children.length; i ++){
     if(this.children[i] === node){
       this.children.splice(i,1);
+      node.parent = null;
       break;
     }
   }
@@ -26,7 +27,7 @@ Tree.prototype.removeChild = function(node){
 
 Tree.prototype.removeFromParent = function(){
   this.parent.removeChild(this);
-  this.parent = null;
+  //this.parent = null;
 };
 
 Tree.prototype.contains = function(target, node){
