@@ -23,7 +23,6 @@ Graph.prototype.addNode = function(value, toNode){
 
   //node._weakConnections.push(this);
   if(!!toNode){
-    debugger;
     toNode._strongConnections.push(node);
     node._strongConnections.push(toNode);
   }
@@ -96,7 +95,6 @@ Graph.prototype.addEdge = function(fromNode, toNode){
   if(this.getEdge(fromNode, toNode)){
     return true;
   }
-  debugger;
   fromNode._strongConnections.push(toNode);
   toNode._strongConnections.push(fromNode);
 

@@ -14,12 +14,12 @@ describe("binarySearchTree", function() {
   });
 
   it("should insert values at the correct location in the tree", function(){
-    console.dir(binarySearchTree);
+    // console.dir(binarySearchTree);
     binarySearchTree.insert(2);
     binarySearchTree.insert(3);
     binarySearchTree.insert(7);
     binarySearchTree.insert(6);
-    console.log("The Tree before the error is", binarySearchTree);
+    // console.log("The Tree before the error is", binarySearchTree);
     expect(binarySearchTree.left.right.value).to.equal(3);
     expect(binarySearchTree.right.left.value).to.equal(6);
     binarySearchTree.insert(21);
@@ -42,8 +42,7 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(38);
     binarySearchTree.insert(39);
 
-    console.log(binarySearchTree);
-    debugger;
+    // console.log(binarySearchTree);
     
   });
 
@@ -77,8 +76,8 @@ describe("binarySearchTree", function() {
     binarySearchTree.breadthFirstLog(function(value){
       results.push(value);
     }, function(obj){
-        console.log("calback from breadthFirstLog ", obj);
-        console.log("calback from breadthFirstLog", results);
+        // console.log("calback from breadthFirstLog ", obj);
+        // console.log("callback from breadthFirstLog", results);
         assert.isTrue(results.length === 8);
         assert.isTrue(results[0] === 5);
         assert.isTrue(results[1] === 2);

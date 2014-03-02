@@ -11,7 +11,7 @@ var BinarySearchTree = function(value){
   this.value = value;
 };
 BinarySearchTree.prototype.checkImbalance = function(){
-  console.log("checkImbalance running...");
+  // console.log("checkImbalance running...");
   var left = 0;
   var right = 0;
   var values = [];
@@ -28,7 +28,7 @@ BinarySearchTree.prototype.checkImbalance = function(){
       values.push(value);
     });
   }
-  console.log("vals before compare:", left, right, values);
+  // console.log("vals before compare:", left, right, values);
   if( ( (left + right) > 16 ) && (left < (right/2) || right < (left/2)) ){
     console.log("recreating...");
     var newTree = this.recreate(values);
@@ -36,7 +36,7 @@ BinarySearchTree.prototype.checkImbalance = function(){
     this.left = newTree.left;
     this.right = newTree.right;
 
-    console.log('new tree is ', this);
+    // console.log('new tree is ', this);
 
   }
 
@@ -101,6 +101,7 @@ BinarySearchTree.prototype.depthFirstLog = function(callback){
 BinarySearchTree.prototype.breadthFirstLog = function(callback, done){
   var that = this;
   callback(this.value);
+
   var callDone = (function(obj, done){
     var called = 0;
     return function(){
@@ -110,6 +111,8 @@ BinarySearchTree.prototype.breadthFirstLog = function(callback, done){
       }
     };
   })(this, done);
+
+
   setTimeout(function(){
     if(!!that.left){
       that.left.breadthFirstLog(callback, callDone);
